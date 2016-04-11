@@ -35,6 +35,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "db-migrate": "^0.10.0-beta.11",
+    "db-migrate-pg": "^0.1.9",
     "react": "^0.14.8",
     "react-bootstrap": "^0.28.4",
     "react-dom": "^0.14.8"

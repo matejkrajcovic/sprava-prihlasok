@@ -1,0 +1,11 @@
+{
+    "sql-file": true,
+    "defaultEnv": "dev",
+    "dev": {
+        "driver": "pg",
+        "user": "postgres",
+        "password": "password",
+        "host": "localhost",
+        "database": "sprava_prihlasok"
+    }
+}

@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS answers;
+
+DROP TABLE IF EXISTS questions;
+
+DROP TABLE IF EXISTS votes;
+
+DROP TABLE IF EXISTS nameProposalComment;
+
+DROP TABLE IF EXISTS nameProposals;
+
+DROP TABLE IF EXISTS applicantComments;
+
+DROP TABLE IF EXISTS organizerCamp;
+
+DROP TABLE IF EXISTS organizers;
+
+DROP TABLE IF EXISTS applicants;
+
+DROP TABLE IF EXISTS camps;
