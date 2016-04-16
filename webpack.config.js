@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 
 const PATHS = {
   client: path.join(__dirname, 'client'),
@@ -31,7 +32,11 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: "babel-loader",
+        query: {
+          presets: ['es2015', 'react'],
+          plugins: ['transform-flow-strip-types']
+        }
       },
       {
         test: /\.css$/,
@@ -55,7 +60,8 @@ module.exports = {
       title: 'Správa prihlášok',
       appMountId: 'app',
       inject: false
-    })
+    }),
+    new FlowStatusWebpackPlugin()
   ],
 
   devServer: {
