@@ -53,7 +53,7 @@ CREATE TABLE nameProposalComment (
 
 CREATE TABLE votes (
        id integer PRIMARY KEY,
-       nameProposal integer NOT NULL REFERENCES nameProposals,
+       nameProposalId integer NOT NULL REFERENCES nameProposals,
        organizerId integer NOT NULL REFERENCES organizers,
        createdOn timestamp with time zone NOT NULL
 );

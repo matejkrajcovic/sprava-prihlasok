@@ -1,5 +1,5 @@
 ALTER TABLE applicants
-    DROP COLUMN text RESTRICT,
+    DROP COLUMN name RESTRICT,
     DROP COLUMN answers RESTRICT;
 
 CREATE TABLE questions (
