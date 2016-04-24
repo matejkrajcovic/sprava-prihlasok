@@ -17,3 +17,14 @@ export const getCampsByYear = async (node, args) => {
   `
   return await db.rows(query(args.year))
 }
+
+export const getCampsByOrganizer = async (node, args) => {
+  const query = (organizerId) => SQL`
+    SELECT camps.id, camps.number, camps.year
+    FROM camps
+        JOIN organizerCamp ON camps.id = organizerCamp.campId
+        JOIN organizers ON organizers.id = organizerCamp.organizerId
+    WHERE organizers.id = ${organizerId};
+  `
+  return await db.rows(query(args.id))
+}

@@ -4,6 +4,8 @@ import {campType} from '../types/Camp'
 import {getCampById} from '../actions/camps'
 import {applicantCommentType} from '../types/ApplicantComment'
 import {getApplicantCommentByApplicant} from '../actions/applicantComments'
+import {nameProposalType} from '../types/NameProposal'
+import {getNameProposalsByApplicant} from '../actions/nameProposals'
 
 export const applicantType = new GraphQLObjectType({
   name: 'Applicant',
@@ -48,6 +50,10 @@ export const applicantType = new GraphQLObjectType({
       type: new GraphQLList(applicantCommentType),
       description: '',
       resolve: (applicant) => getApplicantCommentByApplicant(applicant, {id: applicant.id})
+    },
+    nameProposals: {
+      type: new GraphQLList(nameProposalType),
+      resolve: (applicant) => getNameProposalsByApplicant(applicant, {id: applicant.id})
     }
   })
 })

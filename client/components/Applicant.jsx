@@ -1,10 +1,22 @@
 import React, {PropTypes} from 'react'
-import {ListGroupItem} from 'react-bootstrap'
+import {Panel} from 'react-bootstrap'
+import Answers from './Answers'
+import ApplicantComments from './ApplicantComments'
+import NameProposals from './NameProposals'
 
-const Applicant = (applicant) => (
-  <ListGroupItem>
-    Name: {applicant.name}
-  </ListGroupItem>
+const Applicant = ({...applicant, onApplicantSelect}) => (
+  <Panel collapsible defaultCollapse
+         header={applicant.name}
+         bsStyle={applicant.accepted ? 'success' : ''}
+         onSelect={() => {
+             if (!applicant.fullyFetched) {
+               onApplicantSelect(applicant.id)
+             }
+           }} >
+    <Answers answers={applicant.answers} />
+    <ApplicantComments comments={applicant.comments} />
+    <NameProposals nameProposals={applicant.nameProposals} />
+  </Panel>
 )
 
 Applicant.propTypes = {

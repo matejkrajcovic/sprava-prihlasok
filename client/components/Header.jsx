@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar} from 'react-bootstrap'
+import CampsListContainer from '../containers/CampsListContainer'
 
 export default class Header extends React.Component {
   render () {
@@ -10,6 +11,7 @@ export default class Header extends React.Component {
             Správa prihlášok
           </Navbar.Brand>
         </Navbar.Header>
+        <CampsListContainer />
       </Navbar>
     )
   }

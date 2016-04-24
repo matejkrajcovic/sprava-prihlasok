@@ -8,7 +8,8 @@ export const Schema = new GraphQLSchema({
       applicant: require('./queries/applicant').default,
       camp: require('./queries/camp').getById,
       camps: require('./queries/camp').getByYear,
-      applicantComment: require('./queries/applicantComment').getById
+      applicantComment: require('./queries/applicantComment').getById,
+      organizer: require('./queries/organizer').default
     })
   })
 })

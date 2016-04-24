@@ -1,16 +1,23 @@
 import React, {PropTypes} from 'react'
+import {values} from 'lodash'
+import {PanelGroup} from 'react-bootstrap'
 import Applicant from './Applicant'
-import {ListGroup} from 'react-bootstrap'
 
-const ApplicantsList = ({applicants}) => (
-  <ListGroup>
-    {applicants.map(applicant =>
-      <Applicant
-          key={applicant.id}
-          {...applicant}
-      />
+const ApplicantsList = ({applicants, onApplicantSelect} ) => (
+  <PanelGroup>
+    {values(applicants).map((applicant) => {
+       console.log(onApplicantSelect)
+
+       return (
+         <Applicant
+             key={applicant.id}
+             onApplicantSelect={onApplicantSelect}
+             {...applicant}
+         />
+       )
+     }
      )}
-  </ListGroup>
+  </PanelGroup>
 )
 
 ApplicantsList.propTypes = {
