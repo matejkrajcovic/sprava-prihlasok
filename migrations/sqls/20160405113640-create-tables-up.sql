@@ -1,7 +1,7 @@
 CREATE TABLE camps (
        id integer PRIMARY KEY,
        number integer NOT NULL CHECK (number BETWEEN 1 AND 6),
-       year date NOT NULL
+       year integer NOT NULL
 );
 
 CREATE TABLE applicants (
@@ -24,7 +24,6 @@ CREATE TABLE organizerCamp (
        role text NOT NULL CHECK (role <> ''),
        CONSTRAINT organizerCampPK PRIMARY KEY (organizerId, campId)
 );
-
 
 CREATE TABLE applicantComments (
        id integer PRIMARY KEY,

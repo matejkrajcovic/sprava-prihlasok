@@ -1,4 +1,7 @@
 /* @flow */
+require('babel-core/register')
+require('babel-polyfill')
+
 import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import path from 'path'

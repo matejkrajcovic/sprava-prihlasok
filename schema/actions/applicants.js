@@ -1,26 +1,23 @@
 /* @noflow */
+import db from '../db'
+import {SQL} from 'pg-async'
 
-const applicants = {
-  0: {
-    id: 0,
-    accepted: true,
-    sentMail: false,
-    createdOn: '2016-04-17 08:46:49'
-  },
-  1: {
-    id: 1,
-    accepted: true,
-    sentMail: false,
-    createdOn: '2030-04-17 08:46:49'
-  },
-  2: {
-    id: 2,
-    accepted: true,
-    sentMail: false,
-    createdOn: '2047-04-17 08:46:49'
-  }
+export const getApplicant = async (node, args) => {
+  const query = (id) => SQL`
+    SELECT id, campId, name, answers, accepted, sentMail, createdOn FROM applicants
+    WHERE id = ${id};
+  `
+
+  return await db.row(query(args.id))
 }
 
-export const getApplicant = (node, args) => {
-  return applicants[args.id]
+export const getApplicantsByCampId = async (node, args) => {
+  const query = (id) => SQL`
+    SELECT id, campId, name, answers, accepted, sentMail, createdOn FROM applicants
+    WHERE campId = ${id};
+  `
+
+  const ret = await db.rows(query(node.id))
+  console.log(ret)
+  return ret
 }

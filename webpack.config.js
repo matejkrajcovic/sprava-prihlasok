@@ -10,7 +10,7 @@ const PATHS = {
 };
 
 module.exports = {
-  entry: path.join(PATHS.client, '/index.jsx'),
+  entry: ['babel-polyfill', path.join(PATHS.client, '/index.jsx')],
   output: {
     path: PATHS.dist,
     filename: 'bundle.js'

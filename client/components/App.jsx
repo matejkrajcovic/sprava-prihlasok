@@ -1,11 +1,11 @@
 /* @flow  */
 import React from 'react'
-import Header from './Header.jsx'
+import VisibleApplicantsList from '../containers/VisibleApplicantsList'
 
-export default class App extends React.Component {
-  render () {
-    return (
-      <Header />
-    )
-  }
-}
+const App = () => (
+  <div>
+    <VisibleApplicantsList />
+  </div>
+)
+
+export default App

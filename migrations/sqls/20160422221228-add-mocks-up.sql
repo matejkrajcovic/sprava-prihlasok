@@ -1,10 +1,10 @@
 INSERT INTO camps (id, number, year) VALUES
-    (1, 1,' 2016-01-01'),
-    (2, 2, '2016-01-01'),
-    (3, 3, '2016-01-01'),
-    (4, 4, '2016-01-01'),
-    (5, 5, '2016-01-01'),
-    (6, 6, '2016-01-01');
+    (1, 1, 2016),
+    (2, 2, 2016),
+    (3, 3, 2016),
+    (4, 4, 2016),
+    (5, 5, 2016),
+    (6, 6, 2016);
 
 insert into applicants (id, campId, accepted, sentMail, name, createdOn, answers) values
     (1, 1, false, true, 'Deborah Edwards', '2015-07-19 05:34:48', '[{"preferovanaDruzina":5,"datumNarodenia":"2015-11-20","studiumPraca":null,"adresa":"80 Harper Pass","telefon":"691-(500)974-7973","email":"ajenkins0@intel.com","rodneCislo":"108-07-8292","alternativnaDruzina":null,"celych14dni":"Etiam pretium iaculis justo.","odkialSaDozvedel":null,"coNakoniecMotivovalo":null,"telesnyStav":null,"zavislost":null,"zrucnost":null,"zlozilSiKostiNaNoc":null,"bolSiUzNaTabore":null,"bojisSa":null,"radSaHras":null,"coTaPotesi":null,"ukryvatMyslienky":null,"jedlo":null,"znaky":null,"basen":"In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.","nevsednaVlastnost":null,"desatVeci":null,"hudba":null,"coSiSlubujes":null,"dubova":null,"pesZakopany":null}]'),

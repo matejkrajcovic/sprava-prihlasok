@@ -1,5 +1,9 @@
 /* @flow */
-import {GraphQLInt, GraphQLObjectType, GraphQLUnionType, GraphQLBoolean, GraphQLFloat, GraphQLInterfaceType, GraphQLString} from 'graphql'
+import {GraphQLInt, GraphQLObjectType, GraphQLUnionType, GraphQLBoolean, GraphQLFloat, GraphQLInterfaceType, GraphQLString, GraphQLList} from 'graphql'
+import {campType} from '../types/Camp'
+import {getCampById} from '../actions/camps'
+import {applicantCommentType} from '../types/ApplicantComment'
+import {getApplicantCommentByApplicant} from '../actions/applicantComments'
 
 export const applicantType = new GraphQLObjectType({
   name: 'Applicant',
@@ -8,17 +12,42 @@ export const applicantType = new GraphQLObjectType({
     id: {
       type: GraphQLInt
     },
+    campId: {
+      type: GraphQLInt,
+      description: '',
+      resolve: (applicant) => applicant.campid
+    },
+    camp: {
+      type: campType,
+      description: '',
+      resolve: (applicant) => getCampById(applicant, {id: applicant.campid})
+    },
+    name: {
+      type: GraphQLString
+    },
     accepted: {
       type: GraphQLBoolean,
       description: ''
     },
     sentMail: {
       type: GraphQLBoolean,
-      description: ''
+      description: '',
+      resolve: (applicant) => applicant.sentmail
     },
     createdOn: {
       type: GraphQLString,
-      description: ''
+      description: '',
+      resolve: (applicant) => applicant.createdon
+    },
+    answers: {
+      type: GraphQLString,
+      description: '',
+      resolve: (applicant) => JSON.stringify(applicant.answers)
+    },
+    comments: {
+      type: new GraphQLList(applicantCommentType),
+      description: '',
+      resolve: (applicant) => getApplicantCommentByApplicant(applicant, {id: applicant.id})
     }
   })
 })
