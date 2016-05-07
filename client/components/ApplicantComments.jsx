@@ -11,6 +11,7 @@ const ApplicantComments = ({comments}) => {
 
   return (
     <ListGroup>
+      <ListGroupItem bsStyle='info' header='Komentáre k odpovediam'/>
       {comments.map((comment, index) => {
         return (
           <ListGroupItem key={index}>

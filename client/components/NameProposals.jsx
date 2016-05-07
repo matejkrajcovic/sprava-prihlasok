@@ -11,6 +11,7 @@ const NameProposals = ({nameProposals}) => {
 
   return (
     <ListGroup>
+      <ListGroupItem bsStyle='info' header='Návrhy mien'/>
       {nameProposals.map((nameProposal, index) => {
         return (
           <ListGroupItem key={index} header={nameProposal.name} >

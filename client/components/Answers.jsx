@@ -41,6 +41,7 @@ const Answers = ({answers}) => {
 
   return (
     <ListGroup>
+      <ListGroupItem bsStyle='info' header='Odpovede'/>
       {questions.map((question, index) => {
         return (
           <ListGroupItem key={index}>
