@@ -11,14 +11,14 @@ const NameProposals = ({nameProposals}) => {
 
   return (
     <ListGroup>
-      {nameProposals.map((nameProposal) => {
+      {nameProposals.map((nameProposal, index) => {
         return (
-          <ListGroupItem header={nameProposal.name} >
+          <ListGroupItem key={index} header={nameProposal.name} >
             {nameProposal.description}
             <br />
             <i>{formatDate(nameProposal.createdOn)}</i>
           </ListGroupItem>
-          )
+        )
       })}
     </ListGroup>
   )

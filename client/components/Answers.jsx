@@ -2,7 +2,7 @@ import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
 const Answers = ({answers}) => {
-  const conversion = [
+  const questions = [
     {name: 'Dátum narodenia', field: 'datumNarodenia'},
     {name: 'Štúdium/práca', field: 'studiumPraca'},
     {name: 'Adresa', field: 'adresa'},
@@ -41,9 +41,9 @@ const Answers = ({answers}) => {
 
   return (
     <ListGroup>
-      {conversion.map((question) => {
+      {questions.map((question, index) => {
         return (
-          <ListGroupItem>
+          <ListGroupItem key={index}>
             <b>{question.name}:</b> {answers[question.field]}
           </ListGroupItem>
         )

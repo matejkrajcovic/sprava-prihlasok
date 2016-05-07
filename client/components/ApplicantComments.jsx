@@ -11,9 +11,9 @@ const ApplicantComments = ({comments}) => {
 
   return (
     <ListGroup>
-      {comments.map((comment) => {
+      {comments.map((comment, index) => {
         return (
-          <ListGroupItem>
+          <ListGroupItem key={index}>
             <b>{comment.author.name}</b> <i>{formatDate(comment.createdOn)}</i><br/>
             {comment.text}
           </ListGroupItem>

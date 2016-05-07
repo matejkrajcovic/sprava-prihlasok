@@ -7,7 +7,7 @@ import NameProposals from './NameProposals'
 const Applicant = ({...applicant, onApplicantSelect}) => (
   <Panel collapsible defaultCollapse
     header={applicant.name}
-    bsStyle={applicant.accepted ? 'success' : ''}
+    bsStyle={applicant.accepted ? 'success' : 'default'}
     onSelect={() => {
       if (!applicant.fullyFetched) {
         onApplicantSelect(applicant.id)
