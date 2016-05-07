@@ -1,5 +1,4 @@
 /* @noflow */
-import {combineReducers} from 'redux'
 import {cloneDeep} from 'lodash'
 
 export const defaultReducer = (state = {}, action) => {
@@ -29,7 +28,7 @@ export const defaultReducer = (state = {}, action) => {
       let newApplicants = cloneDeep(state.applicants)
       newApplicants[action.applicantId] = {
         ...state.applicants[action.applicantId],
-        isFetching:true
+        isFetching: true
       }
 
       return Object.assign({}, state, {

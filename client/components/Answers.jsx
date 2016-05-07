@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
 const Answers = ({answers}) => {
@@ -33,26 +33,23 @@ const Answers = ({answers}) => {
     {name: 'Kde je pes zakopaný', field: 'pesZakopany'}
   ]
 
-  if (answers == undefined) {
+  if ((answers === undefined) || (answers.length === 0)) {
     return (
-      <ListGroup></ListGroup>
+      <ListGroup />
     )
   }
-
-  console.log(answers)
 
   return (
     <ListGroup>
       {conversion.map((question) => {
-         return (
-           <ListGroupItem>
-             <b>{question.name}:</b> {answers[question.field]}
-           </ListGroupItem>
-           )
-       })}
+        return (
+          <ListGroupItem>
+            <b>{question.name}:</b> {answers[question.field]}
+          </ListGroupItem>
+        )
+      })}
     </ListGroup>
   )
 }
-
 
 export default Answers

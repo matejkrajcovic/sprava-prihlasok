@@ -1,26 +1,24 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
 const ApplicantComments = ({comments}) => {
-
-  if (comments == undefined) {
+  if ((comments === undefined) || (comments.length === 0)) {
     return (
-      <ListGroup></ListGroup>
+      <ListGroup />
     )
   }
 
   return (
     <ListGroup>
       {comments.map((comment) => {
-         return (
-           <ListGroupItem>
-             {comment.text} <i>{comment.createdOn}</i>
-           </ListGroupItem>
-           )
-       })}
+        return (
+          <ListGroupItem>
+            {comment.text} <i>{comment.createdOn}</i>
+          </ListGroupItem>
+          )
+      })}
     </ListGroup>
   )
 }
-
 
 export default ApplicantComments

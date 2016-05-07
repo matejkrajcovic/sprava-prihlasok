@@ -18,17 +18,16 @@ let store = createStore(defaultReducer,
                             thunkMiddleware,
                             loggerMiddleware
                           ),
-                          window.devToolsExtension ? window.devToolsExtension() : f => f
+                          window.devToolsExtension ? window.devToolsExtension() : (f) => f
                         )
 )
 
 store.dispatch(shallowFetch(10))
 
-render(
-  (
-    <Provider store={store}>
-      <App />
-    </Provider>
+render((
+  <Provider store={store}>
+    <App />
+  </Provider>
   ),
   document.getElementById('app')
 )

@@ -19,7 +19,7 @@ export const receiveShallowFetch = (json) => {
 
   let applicants = []
   for (let camp of organizer.camps) {
-    applicants = applicants.concat(camp.applicants.map(applicant => {
+    applicants = applicants.concat(camp.applicants.map((applicant) => {
       return {
         ...applicant,
         fullyFetched: false,
@@ -32,7 +32,7 @@ export const receiveShallowFetch = (json) => {
     type: 'RECEIVE_SHALLOW_FETCH',
     name: organizer.name,
     organizerId: organizer.id,
-    camps: organizer.camps.map(camp => {
+    camps: organizer.camps.map((camp) => {
       return {
         id: camp.id,
         number: camp.number,
@@ -63,7 +63,7 @@ export const shallowFetch = (organizerId) => {
                    }
                  }`
 
-  return dispatch => {
+  return (dispatch) => {
     dispatch(requestShallowFetch())
     return fetch(`http://localhost:3000/graphql?query=${query}`)
 .then((response) => response.json())
