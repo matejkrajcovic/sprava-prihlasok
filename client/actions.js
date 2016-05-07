@@ -1,5 +1,6 @@
 /* @noflow */
 import fetch from 'isomorphic-fetch'
+import moment from 'moment'
 
 export const selectCamp = (newCamp) => {
   return {
@@ -82,6 +83,14 @@ export const receiveFullFetch = (json) => {
   let {applicant} = json.data
   applicant.answers = JSON.parse(applicant.answers)[0]
 
+  for (let comment of applicant.comments) {
+    comment.createdOn = moment(comment.createdOn)
+  }
+
+  for (let nameProposal of applicant.nameProposals) {
+    nameProposal.createdOn = moment(nameProposal.createdOn)
+  }
+
   return {
     type: 'RECEIVE_FULL_FETCH',
     applicantId: applicant.id,
@@ -101,13 +110,16 @@ export const fullFetch = (applicantId) => {
                      answers,
                      comments {
                        text,
-                       createdOn
+                       createdOn,
+                       author {
+                         name
+                       }
                      },
                      nameProposals {
                        id,
                        name,
                        description,
-                       createdOn
+                       createdOn,
                        author {
                          name
                        }
@@ -120,5 +132,54 @@ export const fullFetch = (applicantId) => {
     return fetch(`http://localhost:3000/graphql?query=${query}`)
    .then((response) => response.json())
    .then((json) => dispatch(receiveFullFetch(json)))
+  }
+}
+
+export const requestAddApplicantComment = (applicantId, organizerId, text) => {
+  return {
+    type: 'REQUEST_ADD_APPLICANT_COMMENT',
+    applicantId,
+    organizerId,
+    text
+  }
+}
+
+export const receiveAddApplicantComment = (json) => {
+  let applicantComment = json.data.addApplicantComment
+
+  applicantComment.createdOn = moment(applicantComment.createdOn)
+
+  return {
+    type: 'RECEIVE_ADD_APPLICANT_COMMENT',
+    applicantComment
+  }
+}
+
+export const addApplicantComment = (applicantId, organizerId, text) => {
+  const query = `mutation {
+                   addApplicantComment(applicantId: ${applicantId},
+                                       authorId: ${organizerId},
+                                       text: "${text}") {
+                     text,
+                     author {
+                       name
+                     },
+                     createdOn
+                   }
+                 }`
+
+  return (dispatch) => {
+    dispatch(requestAddApplicantComment(applicantId, organizerId, text))
+    return fetch(`http://localhost:3000/graphql?query=${query}`)
+   .then((response) => response.json())
+   .then((json) => dispatch(receiveAddApplicantComment(json)))
+  }
+}
+
+export const changeApplicantCommentForm = (applicantId, text) => {
+  return {
+    type: 'CHANGE_APPLICANT_COMMENT_FORM',
+    applicantId,
+    text
   }
 }

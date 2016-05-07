@@ -6,7 +6,6 @@ import {fullFetch} from '../actions'
 
 const getVisibleApplicants = (applicants = {}, activeCamp) => {
   return pickBy(applicants, (a) => (activeCamp === a.campId))
-  /*   return applicants.filter(a => (activeCamp === a.campId)) */
 }
 
 const mapStateToProps = (state) => {

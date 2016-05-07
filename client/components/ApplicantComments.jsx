@@ -1,5 +1,6 @@
 import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {formatDate} from '../utils'
 
 const ApplicantComments = ({comments}) => {
   if ((comments === undefined) || (comments.length === 0)) {
@@ -13,7 +14,8 @@ const ApplicantComments = ({comments}) => {
       {comments.map((comment) => {
         return (
           <ListGroupItem>
-            {comment.text} <i>{comment.createdOn}</i>
+            <b>{comment.author.name}</b> <i>{formatDate(comment.createdOn)}</i><br/>
+            {comment.text}
           </ListGroupItem>
           )
       })}

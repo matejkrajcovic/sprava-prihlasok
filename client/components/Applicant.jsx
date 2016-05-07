@@ -1,5 +1,5 @@
 import React from 'react'
-import {Panel} from 'react-bootstrap'
+import {Panel, Grid, Row, Col} from 'react-bootstrap'
 import Answers from './Answers'
 import ApplicantComments from './ApplicantComments'
 import NameProposals from './NameProposals'
@@ -13,9 +13,19 @@ const Applicant = ({...applicant, onApplicantSelect}) => (
         onApplicantSelect(applicant.id)
       }
     }} >
-    <Answers answers={applicant.answers} />
-    <ApplicantComments comments={applicant.comments} />
-    <NameProposals nameProposals={applicant.nameProposals} />
+    <Grid>
+      <Row>
+        <Col md={6}>
+          <Answers answers={applicant.answers} />
+          <ApplicantComments comments={applicant.comments} />
+        </Col>
+        <Col md={6}>
+          <NameProposals
+            nameProposals={applicant.nameProposals}
+          />
+        </Col>
+      </Row>
+    </Grid>
   </Panel>
 )
 

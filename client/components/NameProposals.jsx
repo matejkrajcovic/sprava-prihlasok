@@ -1,5 +1,6 @@
 import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {formatDate} from '../utils'
 
 const NameProposals = ({nameProposals}) => {
   if ((nameProposals === undefined) || (nameProposals.length === 0)) {
@@ -15,7 +16,7 @@ const NameProposals = ({nameProposals}) => {
           <ListGroupItem header={nameProposal.name} >
             {nameProposal.description}
             <br />
-            <i>{nameProposal.createdOn}</i>
+            <i>{formatDate(nameProposal.createdOn)}</i>
           </ListGroupItem>
           )
       })}
