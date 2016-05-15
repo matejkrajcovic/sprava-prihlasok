@@ -29,3 +29,13 @@ export const addApplicantComment = async (node, args) => {
 
   return await db.row(query(args.applicantId, args.authorId, args.text))
 }
+
+export const removeApplicantComment = async (node, args) => {
+  const query = (commentId) => SQL`
+    DELETE FROM applicantComments
+    WHERE id = ${commentId}
+    RETURNING id, applicantId, organizerId, text, createdOn;
+  `
+
+  return await db.row(query(args.commentId))
+}

@@ -1,7 +1,7 @@
 /* @flow */
 import {GraphQLNonNull, GraphQLInt, GraphQLString} from 'graphql'
 import {applicantCommentType} from '../types/ApplicantComment'
-import {addApplicantComment} from '../actions/applicantComments'
+import {addApplicantComment, removeApplicantComment} from '../actions/applicantComments'
 
 export const addComment = {
   type: applicantCommentType,
@@ -17,4 +17,14 @@ export const addComment = {
     }
   },
   resolve: addApplicantComment
+}
+
+export const removeComment = {
+  type: applicantCommentType,
+  args: {
+    commentId: {
+      type: new GraphQLNonNull(GraphQLInt),
+    }
+  },
+  resolve: removeApplicantComment
 }

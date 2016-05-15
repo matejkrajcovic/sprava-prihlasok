@@ -1,18 +1,32 @@
 import React from 'react'
-import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {ListGroup, ListGroupItem, Glyphicon, Button} from 'react-bootstrap'
 import {formatDate} from '../utils'
 import NewApplicantCommentForm from './NewApplicantCommentForm'
 
-const ApplicantComments = ({comments, newComment,
+const ApplicantComments = ({comments, newComment, organizerId,
                             onChangeApplicantComment,
+                            onRemoveApplicantComment,
                             onNewApplicantCommentSend}) => {
   let commentsList = ''
 
   if (comments) {
     commentsList = comments.map((comment, index) => {
+      const myComment = comment.author.id === organizerId
+      const authorName = myComment ? 'Me' : comment.author.name
+
       return (
         <ListGroupItem key={index}>
-          <b>{comment.author.name}</b> <i>{formatDate(comment.createdOn)}</i><br/>
+          <b>{authorName}</b> <i>{formatDate(comment.createdOn)}</i>
+          {myComment
+           ? (
+            <Button
+              bsSize='xsmall'
+              onClick={onRemoveApplicantComment(comment.id)} >
+              <Glyphicon glyph='remove' />
+            </Button>
+           )
+           : ''}
+          <br/>
           {comment.text}
         </ListGroupItem>
       )

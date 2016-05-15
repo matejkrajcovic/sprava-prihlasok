@@ -16,6 +16,7 @@ export const Schema = new GraphQLSchema({
     name: 'RootMutationType',
     fields: () => ({
       addApplicantComment: require('./mutations/applicantComment').addComment,
+      removeApplicantComment: require('./mutations/applicantComment').removeComment
     }),
   }),
 })

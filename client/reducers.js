@@ -1,6 +1,5 @@
 /* @noflow */
 import {Map, fromJS} from 'immutable'
-import {cloneDeep} from 'lodash'
 
 export const defaultReducer = (state = Map(), action) => {
   switch (action.type) {
@@ -37,8 +36,20 @@ export const defaultReducer = (state = Map(), action) => {
       return state.setIn(['applicants', action.applicantId.toString(), 'newComment'], action.newComment)
 
     case 'RECEIVE_ADD_APPLICANT_COMMENT':
-      return state.updateIn(['applicants', action.applicantId.toString(), 'comments'], (list) => list.push(fromJS(action.applicantComment)))
+      return state.updateIn(['applicants', action.applicantId.toString(), 'comments'], (list) =>
+        list.push(fromJS(action.applicantComment)))
 
+    case 'RECEIVE_REMOVE_APPLICANT_COMMENT':
+      console.log(action.applicantId)
+
+      return state.updateIn(['applicants', action.applicantId.toString(), 'comments'], (list) => {
+        console.log(list)
+        console.log(action.commentId)
+        return list.filter((comment) => {
+          console.log(comment.get('id'))
+          return comment.get('id') !== action.commentId
+        })
+      })
     default:
       return state
   }

@@ -1,7 +1,7 @@
 /* @flow */
 import {connect} from 'react-redux'
 import Applicant from '../components/Applicant'
-import {changeApplicantComment, addApplicantComment} from '../actions'
+import {changeApplicantComment, addApplicantComment, removeApplicantComment} from '../actions'
 import {fullFetch} from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +19,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const {id} = ownProps
       dispatch(changeApplicantComment(id, e.target.value))
     },
+    onRemoveApplicantComment: (commentId) => {
+      const {id} = ownProps
+      return () => {
+        dispatch(removeApplicantComment(id, commentId))
+      }
+    },
     onNewApplicantCommentSend: (organizerId) => {
       const {id, newComment} = ownProps
       if (newComment) {
@@ -34,6 +40,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
 
   return {
     ...ownProps,
+    ...stateProps,
     ...dispatchProps,
     onNewApplicantCommentSend: () => onNewApplicantCommentSend(organizerId)
   }

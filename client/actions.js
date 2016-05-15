@@ -115,9 +115,11 @@ export const fullFetch = (applicantId) => {
                      createdOn,
                      answers,
                      comments {
+                       id,
                        text,
                        createdOn,
                        author {
+                         id,
                          name
                        }
                      },
@@ -157,10 +159,13 @@ export const requestAddApplicantComment = (applicantId, text) => {
   }
 }
 
-export const receiveAddApplicantComment = (applicantId, data) => {
+export const receiveAddApplicantComment = (applicantId, organizerId, data) => {
   let applicantComment = data.addApplicantComment
 
   applicantComment.createdOn = moment(applicantComment.createdOn)
+  applicantComment.author = {
+    id: organizerId
+  }
 
   return {
     type: 'RECEIVE_ADD_APPLICANT_COMMENT',
@@ -170,8 +175,6 @@ export const receiveAddApplicantComment = (applicantId, data) => {
 }
 
 export const addApplicantComment = (applicantId, organizerId, text) => {
-  console.log(applicantId, organizerId, text)
-
   const query = `{
                    addApplicantComment(applicantId: ${applicantId},
                                        authorId: ${organizerId},
@@ -189,8 +192,43 @@ export const addApplicantComment = (applicantId, organizerId, text) => {
     return client
       .mutate(query)
       .then((response) => {
-        dispatch(receiveAddApplicantComment(applicantId, response))
+        dispatch(receiveAddApplicantComment(applicantId, organizerId, response))
         dispatch(changeApplicantComment(applicantId, ''))
+      })
+  }
+}
+
+export const requestRemoveApplicantComment = (commentId) => {
+  return {
+    type: 'REQUEST_REMOVE_APPLICANT_COMMENT',
+    commentId
+  }
+}
+
+export const receiveRemoveApplicantComment = (applicantId, commentId, data) => {
+  let applicantComment = data.removeApplicantComment
+
+  return {
+    type: 'RECEIVE_REMOVE_APPLICANT_COMMENT',
+    applicantId,
+    commentId,
+    applicantComment
+  }
+}
+
+export const removeApplicantComment = (applicantId, commentId) => {
+  const query = `{
+                   removeApplicantComment(commentId: ${commentId}) {
+                     id
+                   }
+                 }`
+
+  return (dispatch) => {
+    dispatch(requestRemoveApplicantComment(commentId))
+    return client
+      .mutate(query)
+      .then((response) => {
+        dispatch(receiveRemoveApplicantComment(applicantId, commentId, response))
       })
   }
 }
