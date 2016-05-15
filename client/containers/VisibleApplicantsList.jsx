@@ -2,7 +2,6 @@
 import {connect} from 'react-redux'
 import {pickBy} from 'lodash'
 import ApplicantsList from '../components/ApplicantsList'
-import {fullFetch} from '../actions'
 
 const getVisibleApplicants = (applicants = {}, activeCamp) => {
   return pickBy(applicants, (a) => (activeCamp === a.campId))
@@ -10,16 +9,15 @@ const getVisibleApplicants = (applicants = {}, activeCamp) => {
 
 const mapStateToProps = (state) => {
   return {
-    applicants: getVisibleApplicants(state.applicants, state.activeCamp)
+    applicants: getVisibleApplicants(
+      state.has('applicants') ? state.get('applicants').toJS() : {},
+      state.get('activeCamp')
+    )
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onApplicantSelect: (id) => {
-      dispatch(fullFetch(id))
-    }
-  }
+  return {}
 }
 
 const VisibleApplicantsList = connect(

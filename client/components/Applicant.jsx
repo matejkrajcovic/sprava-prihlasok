@@ -4,7 +4,9 @@ import Answers from './Answers'
 import ApplicantComments from './ApplicantComments'
 import NameProposals from './NameProposals'
 
-const Applicant = ({...applicant, onApplicantSelect}) => (
+const Applicant = ({...applicant, onApplicantSelect,
+                    onChangeApplicantComment,
+                    onNewApplicantCommentSend}) => (
   <Panel collapsible defaultCollapse
     header={applicant.name}
     bsStyle={applicant.accepted ? 'success' : 'default'}
@@ -17,7 +19,12 @@ const Applicant = ({...applicant, onApplicantSelect}) => (
       <Row>
         <Col md={6}>
           <Answers answers={applicant.answers} />
-          <ApplicantComments comments={applicant.comments} />
+          <ApplicantComments
+            comments={applicant.comments}
+            newComment={applicant.newComment}
+            onChangeApplicantComment={onChangeApplicantComment}
+            onNewApplicantCommentSend={onNewApplicantCommentSend}
+          />
         </Col>
         <Col md={6}>
           <NameProposals

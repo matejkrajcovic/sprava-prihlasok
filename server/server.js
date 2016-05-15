@@ -10,7 +10,7 @@ import {Schema} from '../schema'
 
 const app = express()
 
-app.use(cors())
+app.use(cors({origin: 'http://localhost:8080', credentials: true}))
 
 // static files
 app.use('/public', express.static(path.resolve(__dirname, 'public')))

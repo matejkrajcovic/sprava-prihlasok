@@ -1,25 +1,35 @@
 import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
 import {formatDate} from '../utils'
+import NewApplicantCommentForm from './NewApplicantCommentForm'
 
-const ApplicantComments = ({comments}) => {
-  if ((comments === undefined) || (comments.length === 0)) {
-    return (
-      <ListGroup />
-    )
+const ApplicantComments = ({comments, newComment,
+                            onChangeApplicantComment,
+                            onNewApplicantCommentSend}) => {
+  let commentsList = ''
+
+  if (comments) {
+    commentsList = comments.map((comment, index) => {
+      return (
+        <ListGroupItem key={index}>
+          <b>{comment.author.name}</b> <i>{formatDate(comment.createdOn)}</i><br/>
+          {comment.text}
+        </ListGroupItem>
+      )
+    })
   }
 
   return (
     <ListGroup>
       <ListGroupItem bsStyle='info' header='Komentáre k odpovediam'/>
-      {comments.map((comment, index) => {
-        return (
-          <ListGroupItem key={index}>
-            <b>{comment.author.name}</b> <i>{formatDate(comment.createdOn)}</i><br/>
-            {comment.text}
-          </ListGroupItem>
-          )
-      })}
+      {commentsList}
+      <ListGroupItem>
+        <NewApplicantCommentForm
+          text={newComment}
+          onChangeApplicantComment={onChangeApplicantComment}
+          onNewApplicantCommentSend={onNewApplicantCommentSend}
+        />
+      </ListGroupItem>
     </ListGroup>
   )
 }

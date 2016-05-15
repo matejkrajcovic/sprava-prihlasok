@@ -1,15 +1,14 @@
 import React from 'react'
 import {values} from 'lodash'
 import {PanelGroup} from 'react-bootstrap'
-import Applicant from './Applicant'
+import ApplicantContainer from '../containers/ApplicantContainer'
 
-const ApplicantsList = ({applicants, onApplicantSelect}) => (
+const ApplicantsList = ({applicants}) => (
   <PanelGroup>
     {values(applicants).map((applicant) => {
       return (
-        <Applicant
+        <ApplicantContainer
           key={applicant.id}
-          onApplicantSelect={onApplicantSelect}
           {...applicant}
         />
       )

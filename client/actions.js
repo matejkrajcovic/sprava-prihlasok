@@ -1,6 +1,11 @@
 /* @noflow */
-import fetch from 'isomorphic-fetch'
 import moment from 'moment'
+import {Lokka} from 'lokka'
+import {Transport} from 'lokka-transport-http'
+
+const client = new Lokka({
+  transport: new Transport('http://localhost:3000/graphql')
+})
 
 export const selectCamp = (newCamp) => {
   return {
@@ -15,8 +20,8 @@ export const requestShallowFetch = () => {
   }
 }
 
-export const receiveShallowFetch = (json) => {
-  const {organizer} = json.data
+export const receiveShallowFetch = (data) => {
+  const {organizer} = data
 
   let applicants = []
   for (let camp of organizer.camps) {
@@ -66,9 +71,9 @@ export const shallowFetch = (organizerId) => {
 
   return (dispatch) => {
     dispatch(requestShallowFetch())
-    return fetch(`http://localhost:3000/graphql?query=${query}`)
-.then((response) => response.json())
-.then((json) => dispatch(receiveShallowFetch(json)))
+    return client
+      .query(query)
+      .then((response) => dispatch(receiveShallowFetch(response)))
   }
 }
 
@@ -79,9 +84,10 @@ export const requestFullFetch = (applicantId) => {
   }
 }
 
-export const receiveFullFetch = (json) => {
-  let {applicant} = json.data
+export const receiveFullFetch = (data) => {
+  let {applicant} = data
   applicant.answers = JSON.parse(applicant.answers)[0]
+  applicant.newComment = ''
 
   for (let comment of applicant.comments) {
     comment.createdOn = moment(comment.createdOn)
@@ -129,34 +135,44 @@ export const fullFetch = (applicantId) => {
 
   return (dispatch) => {
     dispatch(requestFullFetch(applicantId))
-    return fetch(`http://localhost:3000/graphql?query=${query}`)
-   .then((response) => response.json())
-   .then((json) => dispatch(receiveFullFetch(json)))
+    return client
+      .query(query)
+      .then((response) => dispatch(receiveFullFetch(response)))
   }
 }
 
-export const requestAddApplicantComment = (applicantId, organizerId, text) => {
+export const changeApplicantComment = (applicantId, newComment) => {
+  return {
+    type: 'CHANGE_APPLICANT_COMMENT',
+    applicantId,
+    newComment
+  }
+}
+
+export const requestAddApplicantComment = (applicantId, text) => {
   return {
     type: 'REQUEST_ADD_APPLICANT_COMMENT',
     applicantId,
-    organizerId,
     text
   }
 }
 
-export const receiveAddApplicantComment = (json) => {
-  let applicantComment = json.data.addApplicantComment
+export const receiveAddApplicantComment = (applicantId, data) => {
+  let applicantComment = data.addApplicantComment
 
   applicantComment.createdOn = moment(applicantComment.createdOn)
 
   return {
     type: 'RECEIVE_ADD_APPLICANT_COMMENT',
+    applicantId,
     applicantComment
   }
 }
 
 export const addApplicantComment = (applicantId, organizerId, text) => {
-  const query = `mutation {
+  console.log(applicantId, organizerId, text)
+
+  const query = `{
                    addApplicantComment(applicantId: ${applicantId},
                                        authorId: ${organizerId},
                                        text: "${text}") {
@@ -169,17 +185,12 @@ export const addApplicantComment = (applicantId, organizerId, text) => {
                  }`
 
   return (dispatch) => {
-    dispatch(requestAddApplicantComment(applicantId, organizerId, text))
-    return fetch(`http://localhost:3000/graphql?query=${query}`)
-   .then((response) => response.json())
-   .then((json) => dispatch(receiveAddApplicantComment(json)))
-  }
-}
-
-export const changeApplicantCommentForm = (applicantId, text) => {
-  return {
-    type: 'CHANGE_APPLICANT_COMMENT_FORM',
-    applicantId,
-    text
+    dispatch(requestAddApplicantComment(applicantId, text))
+    return client
+      .mutate(query)
+      .then((response) => {
+        dispatch(receiveAddApplicantComment(applicantId, response))
+        dispatch(changeApplicantComment(applicantId, ''))
+      })
   }
 }

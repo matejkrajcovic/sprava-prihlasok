@@ -5,8 +5,8 @@ import {selectCamp} from '../actions'
 
 const mapStateToProps = (state) => {
   return {
-    activeCamp: state.activeCamp,
-    camps: state.camps
+    activeCamp: state.get('activeCamp'),
+    camps: state.has('camps') ? state.get('camps').toJS() : []
   }
 }
 

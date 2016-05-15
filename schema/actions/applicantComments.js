@@ -19,3 +19,13 @@ export const getApplicantCommentByApplicant = async (node, args) => {
 
   return await db.rows(query(args.id))
 }
+
+export const addApplicantComment = async (node, args) => {
+  const query = (applicantId, organizerId, text) => SQL`
+    INSERT INTO applicantComments (applicantId, organizerId, text, createdOn)
+    VALUES (${applicantId}, ${organizerId}, ${text}, CURRENT_DATE)
+    RETURNING id, applicantId, organizerId, text, createdOn;
+  `
+
+  return await db.row(query(args.applicantId, args.authorId, args.text))
+}

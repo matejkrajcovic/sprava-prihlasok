@@ -11,5 +11,11 @@ export const Schema = new GraphQLSchema({
       applicantComment: require('./queries/applicantComment').getById,
       organizer: require('./queries/organizer').default
     })
-  })
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'RootMutationType',
+    fields: () => ({
+      addApplicantComment: require('./mutations/applicantComment').addComment,
+    }),
+  }),
 })
